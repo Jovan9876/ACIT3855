@@ -1,0 +1,9 @@
+version: 1
+events:
+  hostname: acit-3855.eastus.cloudapp.azure.com
+  port: 9092
+  topic: events
+steps:
+  url: http://localhost:8090/read/steps
+weight:
+  url: http://localhost:8090/read/weight

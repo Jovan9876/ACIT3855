@@ -1,0 +1,155 @@
+openapi: 3.0.0
+info:
+  description: This API provides audit info
+  version: "1.0.0"
+  title: Audit API
+  contact:
+    email: jsandhu162@my.bcit.ca
+
+paths:
+  /step:
+    get:
+      summary: gets a step reading from history
+      operationId: app.getStepReading
+      description: Gets step readings from the event store
+      parameters:
+        - name: index
+          in: query
+          description: Gets the stepInformation at the index in the event store
+          schema:
+            type: integer
+            example: 100
+      responses:
+        '200':
+          description: Successfully returned a stepInformation event
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/StepInformationReading'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+  /weight:
+    get:
+      summary: gets a weight reading from history
+      operationId: app.getWeightReading
+      description: Gets weight reading from the event store
+      parameters:
+        - name: index
+          in: query
+          description: Gets the WeightInformation at the index in the event store
+          schema:
+            type: integer
+            example: 100
+      responses:
+        '200':
+          description: Successfully returned a weightInformation event
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/WeightInformationReading'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '404':
+          description: Not Found
+components:
+  schemas:
+    StepInformationReading:
+      type: object
+      required:
+      - userID
+      - numSteps
+      - totalDistance
+      - elevation
+      - floorsClimbed
+      - timestamp
+      - traceID
+      properties:
+        userID:
+          type: integer
+          example: 1
+        numSteps:
+          type: integer
+          example: 13898
+        totalDistance:
+          type: integer
+          example: 12
+          #(km)
+        elevation:
+          type: integer
+          example: 3
+          #(ft)
+        floorsClimbed:
+          type: integer
+          example: 14
+        timestamp:
+          type: string
+          format: date-time
+          example: "2022-09-22 14:31:26.270075"
+        traceID:
+          type: string
+          format: uuid
+          example: "4445826b-9c51-48d6-a380-0bab2d9524fc"
+    WeightInformationReading:
+      type: object
+      required:
+        - userID
+        - caloriesBurned
+        - weightLost
+        - newWeight
+        - fitnessScore
+        - timestamp
+        - traceID
+      properties:
+        userID:
+          type: integer
+          example: 1
+        caloriesBurned:
+          type: integer
+          example: 448
+        weightLost:
+          type: integer
+          example: 30
+          #(lbs)
+        newWeight:
+          type: integer
+          example: 148
+          #(lbs)
+        fitnessScore:
+          type: integer
+          example: 1
+          # 1 (poor), 2 (okay), 3 (good), 4 (excellent)
+        timestamp:
+          type: string
+          format: date-time
+          example: "2022-09-22 14:31:26.270075"
+        traceID:
+          type: string
+          format: uuid
+          example: "4445826b-9c51-48d6-a380-0bab2d9524fc"

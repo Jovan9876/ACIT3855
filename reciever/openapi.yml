@@ -1,0 +1,113 @@
+openapi: 3.0.0
+servers:
+  - url: "http://localhost:8080"
+info:
+  description: This API recieves events from smart watches
+  version: "1.0.0"
+  title: Fitness API
+  contact:
+    email: jsandhu162@my.bcit.ca
+tags:
+  - name: devices
+    description: Operations available to smart watches
+paths:
+  /read/steps:
+    post:
+      tags:
+        - devices
+      summary: Recieves step information and adds to system
+      operationId: app.addStepInfo
+      description: Adds step information to the system
+      responses:
+        "201":
+          description: Step information added
+        "400":
+          description: "invalid input, object invalid"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/stepInformation"
+        description: Reading item to add
+  /read/weight:
+    post:
+      tags:
+        - devices
+      summary: Recieves weight information and adds to the system
+      operationId: app.addWeightInfo
+      description: Adds weight information to the system
+      responses:
+        "201":
+          description: Weight information updated
+        "400":
+          description: "invalid input, object invalid"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/weightInformation"
+        description: Reading item to add
+components:
+  schemas:
+    stepInformation:
+      type: object
+      required:
+        - userID
+        - numSteps
+        - totalDistance
+        - elevation
+        - floorsClimbed
+        - timestamp
+      properties:
+        userID:
+          type: integer
+          example: 1
+        numSteps:
+          type: integer
+          example: 13898
+        totalDistance:
+          type: integer
+          example: 12
+          #(km)
+        elevation:
+          type: integer
+          example: 3
+          #(ft)
+        floorsClimbed:
+          type: integer
+          example: 14
+        timestamp:
+          type: string
+          format: date-time
+          example: "2022-09-22 14:31:26.270075"
+    weightInformation:
+      required:
+        - userID
+        - caloriesBurned
+        - weightLost
+        - newWeight
+        - fitnessScore
+        - timestamp
+      properties:
+        userID:
+          type: integer
+          example: 1
+        caloriesBurned:
+          type: integer
+          example: 448
+        weightLost:
+          type: integer
+          example: 30
+          #(lbs)
+        newWeight:
+          type: integer
+          example: 148
+          #(lbs)
+        fitnessScore:
+          type: integer
+          example: 1
+          # 1 (poor), 2 (okay), 3 (good), 4 (excellent)
+        timestamp:
+          type: string
+          format: date-time
+          example: "2022-09-22 14:31:26.270075"

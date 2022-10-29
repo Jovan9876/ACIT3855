@@ -1,0 +1,86 @@
+openapi: 3.0.0
+servers:
+  - url: "http://localhost:8100"
+info:
+  description: This API provides event stats
+  version: "1.0.0"
+  title: Stats API
+  contact:
+    email: jsandhu162@my.bcit.ca
+tags:
+  - name: devices
+    description: Operations available to smart watches
+paths:
+  /stats:
+    get:
+      tags:
+        - devices
+      summary: Gets the event stats
+      operationId: app.getStats
+      description: Gets Step information and Weight information processed statistics
+      responses:
+        "200":
+          description: Successfully returned latest statistics regarding weight and steps
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: "#/components/schemas/readingStats"
+        "400":
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+components:
+  schemas:
+    readingStats:
+      type: object
+      required:
+        - numStepReadings
+        - avgNumSteps
+        - avgFloorsClimbed
+        - avgElevation
+        - maxDistance
+        - numWeightReadings
+        - avgWeightLost
+        - avgCaloriesBurned
+        - maxWeightLost
+        - lastUpdated
+      properties:
+        numStepReadingsHr:
+          type: integer
+          example: 2381
+        avgNumSteps:
+          type: integer
+          example: 13898
+        avgFloorsClimbed:
+          type: integer
+          example: 12
+        avgElevation:
+          type: integer
+          example: 4
+          #(ft)
+        maxDistance:
+          type: integer
+          example: 43
+          #(km)
+        numWeightReadingsHr:
+          type: integer
+          example: 4328
+        avgWeightLost:
+          type: integer
+          example: 32
+        avgCaloriesBurned:
+          type: integer
+          example: 438
+        lastUpdated:
+          type: string
+          example: "2022-10-12T18:09:01"
+        maxWeightLost:
+          type: integer
+          example: 84

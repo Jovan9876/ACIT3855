@@ -53,7 +53,8 @@ services:
     restart: always
     ports:
       - 8080:8080
-    # depends_on:
+    depends_on:
+      - kafka
   storage:
     build:
       context: ../storage/
@@ -61,7 +62,8 @@ services:
     restart: always
     ports:
       - 8090:8090
-    # depends_on:
+    depends_on:
+      - "kafka"
   processing:
     build:
       context: ../processing/
@@ -69,7 +71,8 @@ services:
     ports:
       - 8100:8100
     restart: always
-    # depends_on:
+    depends_on:
+      - "storage"
   audit_log:
     build:
       context: ../audit_log/
@@ -77,7 +80,8 @@ services:
     restart: always
     ports:
       - 8110:8110
-    # depends_on:
+    depends_on:
+      - "kafka"
 
 
 

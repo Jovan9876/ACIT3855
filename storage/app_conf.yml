@@ -1,7 +1,7 @@
 version: 1
 mysql:
-  user: 
-  password: 
+  user: user 
+  password: Password
   hostname: acit-3855.eastus.cloudapp.azure.com
   port: 3306
   db: events

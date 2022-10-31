@@ -13,8 +13,8 @@ paths:
       operationId: app.getStepReading
       description: Gets step readings from the event store
       parameters:
-        - name: index
-          in: query
+        - in: query
+          name: index
           description: Gets the stepInformation at the index in the event store
           schema:
             type: integer
@@ -52,8 +52,8 @@ paths:
       operationId: app.getWeightReading
       description: Gets weight reading from the event store
       parameters:
-        - name: index
-          in: query
+        - in: query
+          name: index
           description: Gets the WeightInformation at the index in the event store
           schema:
             type: integer

@@ -46,6 +46,41 @@ services:
     volumes:
       - my-db:/var/lib/mysql
 # Names our volume
+  reciever:
+    build:
+      context: ../reciever/
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - 8080:8080
+    # depends_on:
+  storage:
+    build:
+      context: ../storage/
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - 8090:8090
+    # depends_on:
+  processing:
+    build:
+      context: ../processing/
+      dockerfile: Dockerfile
+    ports:
+      - 8100:8100
+    restart: always
+    # depends_on:
+  audit_log:
+    build:
+      context: ../audit_log/
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - 8110:8110
+    # depends_on:
+
+
+
 volumes: 
   my-db:
 

@@ -10,6 +10,7 @@ from apscheduler.schedulers.background import BackgroundScheduler
 from connexion import NoContent
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from create_tables import create_tables
 
 from base import Base
 from stats import Stats
@@ -26,6 +27,13 @@ Base.metadata.bind = DB_ENGINE
 DB_SESSION = sessionmaker(bind=DB_ENGINE)
 
 logger = logging.getLogger("basicLogger")
+
+session = DB_SESSION()
+try:
+    exists = session.query(Stats).first()
+except:
+    create_tables()
+    session.close()
 
 def getStats():
     """ Get latest statistics from database """

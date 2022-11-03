@@ -13,6 +13,8 @@ from pykafka.common import OffsetType
 from threading import Thread
 import json
 from sqlalchemy.exc import IntegrityError
+from create_tables_mysql import create_tables
+
 
 with open("app_conf.yml", "r") as f:
     app_config = yaml.safe_load(f.read())
@@ -28,6 +30,13 @@ DB_ENGINE = create_engine(
 Base.metadata.bind = DB_ENGINE
 
 DB_SESSION = sessionmaker(bind=DB_ENGINE)
+
+session = DB_SESSION()
+try:
+    exists = session.query(Step).first()
+except:
+    create_tables()
+    session.close()
 
 logger = logging.getLogger("basicLogger")
 

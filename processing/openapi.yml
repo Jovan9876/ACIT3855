@@ -41,12 +41,12 @@ components:
     readingStats:
       type: object
       required:
-        - numStepReadings
+        - numStepReadingsHr
         - avgNumSteps
         - avgFloorsClimbed
         - avgElevation
         - maxDistance
-        - numWeightReadings
+        - numWeightReadingsHr
         - avgWeightLost
         - avgCaloriesBurned
         - maxWeightLost

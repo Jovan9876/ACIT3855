@@ -70,6 +70,7 @@ services:
       dockerfile: Dockerfile
     ports:
       - 8100:8100
+    network_mode: "host"
     restart: always
     depends_on:
       - "storage"

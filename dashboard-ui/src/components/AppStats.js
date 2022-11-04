@@ -35,25 +35,38 @@ export default function AppStats() {
                 <table className={"StatsTable"}>
 					<tbody>
 						<tr>
-							<th>Blood Pressure</th>
-							<th>Heart Rate</th>
+							<th>Step Reading</th>
+							<th>Weight Reading</th>
 						</tr>
 						<tr>
-							<td># BP: {stats['num_bp_readings']}</td>
-							<td># HR: {stats['num_hr_readings']}</td>
+							<td># Step: {stats['numStepReadings']}</td>
+							<td># Weight: {stats['numWeightReadings']}</td>
+
 						</tr>
 						<tr>
-							<td colspan="2">Max BP Systolic: {stats['max_bp_sys_reading']}</td>
+							<td colspan="2">Avg number of steps: {stats['avgNumSteps']}</td>
 						</tr>
 						<tr>
-							<td colspan="2">Max BR Diastolic: {stats['max_bp_dia_reading']}</td>
+							<td colspan="2">Avg weight lost: {stats['avgWeightLost']}</td>
 						</tr>
 						<tr>
-							<td colspan="2">Max HR: {stats['max_bp_sys_reading']}</td>
+							<td colspan="2">Avg floors climbed: {stats['avgFloorsClimbed']}</td>
+						</tr>
+						<tr>
+							<td colspan="2">Avg calories burned: {stats['avgCaloriesBurned']}</td>
+						</tr>
+						<tr>
+							<td colspan="2">Max distance: {stats['maxDistance']}</td>
+						</tr>
+						<tr>
+							<td colspan="2">Max weight lost: {stats['maxWeightLost']}</td>
+						</tr>
+						<tr>
+							<td colspan="2">Avg Elevation: {stats['avgElevation']}</td>
 						</tr>
 					</tbody>
                 </table>
-                <h3>Last Updated: {stats['last_updated']}</h3>
+                <h3>Last Updated: {stats['lastUpdated']}</h3>
 
             </div>
         )

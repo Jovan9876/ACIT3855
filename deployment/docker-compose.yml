@@ -85,7 +85,7 @@ services:
       - "kafka"
   dashboard:
     build:
-      context: ../dashboard/
+      context: ../dashboard-ui/
       dockerfile: Dockerfile
     restart: always
     ports:

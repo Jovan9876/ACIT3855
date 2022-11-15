@@ -78,6 +78,24 @@ paths:
                     type: string
         '404':
           description: Not Found
+  /health:
+    get:
+      tags:
+        - devices
+      summary: Returns the health of the system (running or not running)
+      operationId: app.getHealth
+      description: Returns the health of the system
+      responses:
+        '200':
+          description: Successfully returned a status of service (audit_log)
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: "#/components/schemas/healthObj"
+        "400":
+          description: "not running"
 components:
   schemas:
     StepInformationReading:
@@ -153,3 +171,10 @@ components:
           type: string
           format: uuid
           example: "4445826b-9c51-48d6-a380-0bab2d9524fc"
+    healthObj:
+      required:
+        - audit
+      properties:
+        reciever:
+          type: string
+          example: "running"

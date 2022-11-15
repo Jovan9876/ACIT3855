@@ -47,6 +47,26 @@ paths:
             schema:
               $ref: "#/components/schemas/weightInformation"
         description: Reading item to add
+  /health:
+    get:
+      tags:
+        - devices
+      summary: Returns the health of the system (running or not running)
+      operationId: app.getHealth
+      description: Returns the health of the system
+      responses:
+        '200':
+          description: Successfully returned a status of service (reciever)
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: "#/components/schemas/healthObj"
+        "400":
+          description: "invalid input, object invalid"
+
+      
 components:
   schemas:
     stepInformation:
@@ -111,3 +131,10 @@ components:
           type: string
           format: date-time
           example: "2022-09-22 14:31:26.270075"
+    healthObj:
+      required:
+        - reciever
+      properties:
+        reciever:
+          type: string
+          example: "running"

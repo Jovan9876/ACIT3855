@@ -105,12 +105,15 @@ def populateStats():
                 logger.debug(f"Number of step readings: {len(steps.json())}, Average number of steps: {mean(avg_num_steps)}, Average floors climbed: {mean(avg_floors_climbed)}, Average elevation: {mean(avg_elevation)}, Max distance: {max(max_distance)}, Number of weight readings: {len(weight.json())}, Average weight lost: {mean(avg_weight_lost)}, Average calories burned: {mean(avg_calories_burned)}, Max weight lost: {max(max_weight_lost)}, Last updated at: {current_time}")
     logger.info("Processing period has ended")
 
-
+def getHealth():
+    """Returns the health of the system"""
+    return {"processing": "running"}, 200
 
 def initScheduler():
     sched = BackgroundScheduler(daemon=True)
     sched.add_job(populateStats, 'interval', seconds=app_config['scheduler']['period_sec'])
     sched.start()
+
 app = connexion.FlaskApp(__name__, specification_dir='')
 CORS(app.app)
 app.app.config['CORS_HEADERS'] = 'Content-Type'

@@ -1,0 +1,57 @@
+openapi: 3.0.0
+servers:
+  - url: "http://localhost:8100"
+info:
+  description: This API provides event stats
+  version: "1.0.0"
+  title: Stats API
+  contact:
+    email: jsandhu162@my.bcit.ca
+tags:
+  - name: devices
+    description: Operations available to smart watches
+paths:
+ /health:
+    get:
+      tags:
+        - devices
+      summary: Returns the health of the systems (running or not running)
+      operationId: app.checkHealth
+      description: Returns the health of the systems
+      responses:
+        '200':
+          description: Successfully returned a status of services
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: "#/components/schemas/healthObj"
+        "400":
+          description: "invalid input, object invalid"
+components:
+  schemas:
+    healthObj:
+      required:
+        - reciever
+        - storage
+        - processing
+        - audit
+        - lastUpdate
+      properties:
+        reciever:
+          type: string
+          example: "running"
+        storage:
+          type: string
+          example: "running"
+        processing:
+          type: string
+          example: "running"
+        audit:
+          type: string
+          example: "running"
+        lastUpdate:
+            type: string
+            format: date-time
+            example: "2022-09-22 14:31:26.270075"

@@ -92,6 +92,9 @@ def getWeightReading(index):
     logger.error(f"Could not find Weight at index {index}")
     return { "message": "Not Found"}, 404
 
+def getHealth():
+    """Returns the health of the system"""
+    return {"audit": "running"}, 200
 
 app = connexion.FlaskApp(__name__, specification_dir="")
 app.add_api("openapi.yml", strict_validation=True, validate_responses=True)

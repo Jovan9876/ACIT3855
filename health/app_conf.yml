@@ -4,10 +4,10 @@ datastore:
 scheduler:
   period_sec: 20
 services:
-  reciever: http://localhost:8080
-  storage: http://localhost:8090
-  processing: http://localhost:8100
-  audit: http://localhost:8110
+  reciever: http://reciever:8080
+  storage: http://storage:8090
+  processing: http://processing:8100  
+  audit: http://audit_log:8110
 eventstore:
   filename: status.json
 # ips:

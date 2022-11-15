@@ -106,6 +106,6 @@ components:
       required:
         - processing
       properties:
-        reciever:
+        processing:
           type: string
           example: "running"

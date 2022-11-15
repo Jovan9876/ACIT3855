@@ -175,6 +175,6 @@ components:
       required:
         - audit
       properties:
-        reciever:
+        audit:
           type: string
           example: "running"

@@ -98,7 +98,13 @@ services:
     depends_on:
       - "processing"
       - "audit_log"
-
+  health:
+    build:
+      context: ../health/
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - 8120:8120
 
 volumes: 
   my-db:

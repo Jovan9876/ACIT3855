@@ -14,7 +14,7 @@ from threading import Thread
 import json
 from sqlalchemy.exc import IntegrityError
 from create_tables_mysql import create_tables
-
+import time
 
 with open("app_conf.yml", "r") as f:
     app_config = yaml.safe_load(f.read())
@@ -85,8 +85,18 @@ def getWeightInfo(start_timestamp, end_timestamp):
 
 def process_messages():
     """ Process event messages """
-    client = KafkaClient(hosts=f"{app_config['events']['hostname']}:{app_config['events']['port']}")
-    topic = client.topics[str.encode(app_config["events"]["topic"])]
+    max_retries = app_config['connection']['retries']
+    current_tries = 0
+    while current_tries < max_retries:
+        logger.info(f"Trying to connect to Kafka ATTEMPT {current_tries}")
+        try:
+            client = KafkaClient(hosts=f"{app_config['events']['hostname']}:{app_config['events']['port']}")
+            topic = client.topics[str.encode(app_config["events"]["topic"])]
+        except:
+            current_tries += 1
+            logger.error(f"Connection to Kafka failed ATTEMPT {current_tries}")
+            time.sleep(app_config['scheduler']['sleep'])
+            continue
     # Create a consume on a consumer group, that only reads new messages
     # (uncommitted messages) when the service re-starts (i.e., it doesn't
     # read all the old messages from the history in the message queue).

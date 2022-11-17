@@ -21,7 +21,7 @@ logger = logging.getLogger("basicLogger")
 current_tries = 0
 max_retries = app_config['connection']['retries']
 while current_tries < max_retries:
-    logger.info(f"Trying to connect to Kafka ATTEMPT {current_tries}")
+    #logger.info(f"Trying to connect to Kafka ATTEMPT {current_tries}")
     try:
         client = KafkaClient(hosts=f"{app_config['events']['hostname']}:{app_config['events']['port']}")
         topic = client.topics[str.encode(app_config["events"]["topic"])]

@@ -43,38 +43,41 @@ logger = logging.getLogger("basicLogger")
 logger.info(f"Connecting to DB, Hostname: {app_config['mysql']['hostname']}, Port:{app_config['mysql']['port']}")
 
 
-def getStepInfo(timestamp):
+def getStepInfo(start_timestamp, end_timestamp):
     """Gets new step information after the timestamp"""
     session = DB_SESSION()
-    timestamp_datetime = datetime.datetime.strptime(timestamp, "%Y-%m-%d %H:%M:%S.%f")
+    start_timestamp_datetime = datetime.datetime.strptime(start_timestamp, "%Y-%m-%d %H:%M:%S.f")
+    end_timestamp_datetime = datetime.datetime.strptime(end_timestamp, "%Y-%m-%d %H:%M:%S.f")
 
-    readings = session.query(Step).filter(Step.date_created >= timestamp_datetime)
+    readings = session.query(Step).filter(Step.date_created >= start_timestamp, Step.date_created < end_timestamp)
     results_list = []
     for reading in readings:
         results_list.append(reading.to_dict())
     session.close()
 
     logger.info(
-        f"Query for Step Information after {timestamp} returns {len(results_list)} results"
+        f"Query for Step Information after {start_timestamp_datetime} and before {end_timestamp_datetime} returns {len(results_list)} results"
     )
 
     return results_list, 200
 
 
 
-def getWeightInfo(timestamp):
+def getWeightInfo(start_timestamp, end_timestamp):
     """Gets new step information after the timestamp"""
     session = DB_SESSION()
-    timestamp_datetime = datetime.datetime.strptime(timestamp, "%Y-%m-%d %H:%M:%S.%f")
 
-    readings = session.query(Weight).filter(Weight.date_created >= timestamp_datetime)
+    start_timestamp_datetime = datetime.datetime.strptime(start_timestamp, "%Y-%m-%d %H:%M:%S.f")
+    end_timestamp_datetime = datetime.datetime.strptime(end_timestamp, "%Y-%m-%d %H:%M:%S.f")
+
+    readings = session.query(Weight).filter(Weight.date_created >= start_timestamp, Weight.date_created < end_timestamp)
     results_list = []
     for reading in readings:
         results_list.append(reading.to_dict())
     session.close()
 
     logger.info(
-        f"Query for Weight Information after {timestamp} returns {len(results_list)} results"
+        f"Query for Weight Information after {start_timestamp_datetime} and before {end_timestamp_datetime} returns {len(results_list)} results"
     )
     
     return results_list, 200

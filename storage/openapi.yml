@@ -19,7 +19,14 @@ paths:
       operationId: app.getStepInfo
       description: Gets step information after timestamp
       parameters:
-        - name: timestamp
+        - name: start_timestamp
+          in: query
+          description: Limits the number of items on a page
+          schema:
+            type: string
+            format: date-time
+            example: "2022-10-08 20:30:12.235577"
+        - name: end_timestamp
           in: query
           description: Limits the number of items on a page
           schema:
@@ -52,13 +59,20 @@ paths:
       operationId: app.getWeightInfo
       description: Gets weight information after timestamp
       parameters:
-        - name: timestamp
+        - name: start_timestamp
           in: query
           description: Limits the number of items on a page
           schema:
             type: string
             format: date-time
-            example: "2022-10-08 20:38:12.235577"
+            example: "2022-10-08 20:30:12.235577"
+        - name: end_timestamp
+          in: query
+          description: Limits the number of items on a page
+          schema:
+            type: string
+            format: date-time
+            example: "2022-10-08 20:30:12.235577"
       responses:
         '200':
           description: Successfully returned a list of weight information events
@@ -106,7 +120,8 @@ components:
         - totalDistance
         - elevation
         - floorsClimbed
-        - timestamp
+        - start_timestamp
+        - end_timestamp
         - traceID
       properties:
         userID:
@@ -126,7 +141,11 @@ components:
         floorsClimbed:
           type: integer
           example: 14
-        timestamp:
+        start_timestamp:
+          type: string
+          format: date-time
+          example: "2022-09-22 14:31:26.270075"
+        end_timestamp:
           type: string
           format: date-time
           example: "2022-09-22 14:31:26.270075"
@@ -141,7 +160,8 @@ components:
         - weightLost
         - newWeight
         - fitnessScore
-        - timestamp
+        - start_timestamp
+        - end_timestamp
         - traceID
       properties:
         userID:
@@ -162,7 +182,11 @@ components:
           type: integer
           example: 1
           # 1 (poor), 2 (okay), 3 (good), 4 (excellent)
-        timestamp:
+        start_timestamp:
+          type: string
+          format: date-time
+          example: "2022-09-22 14:31:26.270075"
+        end_timestamp:
           type: string
           format: date-time
           example: "2022-09-22 14:31:26.270075"

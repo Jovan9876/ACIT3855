@@ -67,8 +67,8 @@ def populateStats():
         current_time = datetime.datetime.now()
         last_datetime = last_datetime.to_dict()['lastUpdated']
         # Send a request for step and weight information from the last_updateed time
-        steps = requests.get(f"{app_config['eventstore']['url']}/read/steps?timestamp={last_datetime}")
-        weight = requests.get(f"{app_config['eventstore']['url']}/read/weight?timestamp={last_datetime}")
+        steps = requests.get(f"{app_config['eventstore']['url']}/read/steps?start_timestamp={last_datetime}&end_timestamp={current_time}")
+        weight = requests.get(f"{app_config['eventstore']['url']}/read/weight?start_timestamp={last_datetime}&end_timestamp={current_time}")
 
         if (steps.status_code != 200) or (weight.status_code != 200):
             # If the steps or weight request doesnt return 200 log an error and end processing

@@ -46,8 +46,8 @@ logger.info(f"Connecting to DB, Hostname: {app_config['mysql']['hostname']}, Por
 def getStepInfo(start_timestamp, end_timestamp):
     """Gets new step information after the timestamp"""
     session = DB_SESSION()
-    start_timestamp_datetime = datetime.datetime.strptime(start_timestamp, "%Y-%m-%d %H:%M:%S.f")
-    end_timestamp_datetime = datetime.datetime.strptime(end_timestamp, "%Y-%m-%d %H:%M:%S.f")
+    start_timestamp_datetime = datetime.datetime.strptime(start_timestamp, "%Y-%m-%d %H:%M:%S.%f")
+    end_timestamp_datetime = datetime.datetime.strptime(end_timestamp, "%Y-%m-%d %H:%M:%S.%f")
 
     readings = session.query(Step).filter(Step.date_created >= start_timestamp, Step.date_created < end_timestamp)
     results_list = []
@@ -67,8 +67,8 @@ def getWeightInfo(start_timestamp, end_timestamp):
     """Gets new step information after the timestamp"""
     session = DB_SESSION()
 
-    start_timestamp_datetime = datetime.datetime.strptime(start_timestamp, "%Y-%m-%d %H:%M:%S.f")
-    end_timestamp_datetime = datetime.datetime.strptime(end_timestamp, "%Y-%m-%d %H:%M:%S.f")
+    start_timestamp_datetime = datetime.datetime.strptime(start_timestamp, "%Y-%m-%d %H:%M:%S.%f")
+    end_timestamp_datetime = datetime.datetime.strptime(end_timestamp, "%Y-%m-%d %H:%M:%S.%f")
 
     readings = session.query(Weight).filter(Weight.date_created >= start_timestamp, Weight.date_created < end_timestamp)
     results_list = []

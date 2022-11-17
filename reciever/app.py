@@ -20,16 +20,18 @@ with open("log_conf.yml", "r") as f:
 logger = logging.getLogger("basicLogger")
 current_tries = 0
 max_retries = app_config['connection']['retries']
+print(max_retries)
 while current_tries < max_retries:
-    #logger.info(f"Trying to connect to Kafka ATTEMPT {current_tries}")
+    logger.info(f"Trying to connect to Kafka ATTEMPT {current_tries}")
     try:
         client = KafkaClient(hosts=f"{app_config['events']['hostname']}:{app_config['events']['port']}")
         topic = client.topics[str.encode(app_config["events"]["topic"])]
+        break
     except:
         current_tries += 1
         logger.error(f"Connection to Kafka failed ATTEMPT {current_tries}")
         time.sleep(app_config['scheduler']['sleep'])
-
+        #continue
 def addStepInfo(body):
     """Recieves step count information"""
     trace_id = str(uuid.uuid4())

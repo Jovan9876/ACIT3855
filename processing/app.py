@@ -64,11 +64,21 @@ def populateStats():
         session.commit()
     else:
         # Get last_datetime stamp from latest stats object
-        current_time = datetime.datetime.now()
+        current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")
         last_datetime = last_datetime.to_dict()['lastUpdated']
+
+        print(f"{app_config['eventstore']['url']}")
+
         # Send a request for step and weight information from the last_updateed time
         steps = requests.get(f"{app_config['eventstore']['url']}/read/steps?start_timestamp={last_datetime}&end_timestamp={current_time}")
         weight = requests.get(f"{app_config['eventstore']['url']}/read/weight?start_timestamp={last_datetime}&end_timestamp={current_time}")
+        
+
+        print(steps.status_code)
+        print(weight.status_code)
+        print(f"{app_config['eventstore']['url']}/read/steps?start_timestamp={last_datetime}&end_timestamp={current_time}")
+        print(f"{app_config['eventstore']['url']}/read/weight?start_timestamp={last_datetime}&end_timestamp={current_time}")
+
 
         if (steps.status_code != 200) or (weight.status_code != 200):
             # If the steps or weight request doesnt return 200 log an error and end processing
@@ -98,7 +108,7 @@ def populateStats():
                     avg_weight_lost.append(item['weightLost'])
                     avg_calories_burned.append(item['caloriesBurned'])
                     max_weight_lost.append(item['weightLost'])
-                stats = Stats(len(steps.json()), mean(avg_num_steps), mean(avg_floors_climbed), mean(avg_elevation), max(max_distance), len(weight.json()), mean(avg_weight_lost), mean(avg_calories_burned), max(max_weight_lost),current_time)
+                    stats = Stats(len(steps.json()), mean(avg_num_steps), mean(avg_floors_climbed), mean(avg_elevation), max(max_distance), len(weight.json()), mean(avg_weight_lost), mean(avg_calories_burned), max(max_weight_lost),datetime.datetime.strptime(current_time,"%Y-%m-%d %H:%M:%S.%f"))
                 session.add(stats)
                 session.commit()
                 session.close()

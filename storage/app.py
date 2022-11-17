@@ -46,15 +46,17 @@ logger.info(f"Connecting to DB, Hostname: {app_config['mysql']['hostname']}, Por
 def getStepInfo(start_timestamp, end_timestamp):
     """Gets new step information after the timestamp"""
     session = DB_SESSION()
+    
     start_timestamp_datetime = datetime.datetime.strptime(start_timestamp, "%Y-%m-%d %H:%M:%S.%f")
     end_timestamp_datetime = datetime.datetime.strptime(end_timestamp, "%Y-%m-%d %H:%M:%S.%f")
 
     readings = session.query(Step).filter(Step.date_created >= start_timestamp_datetime, Step.date_created < end_timestamp_datetime)
     results_list = []
+    
     for reading in readings:
         results_list.append(reading.to_dict())
     session.close()
-
+    
     logger.info(
         f"Query for Step Information after {start_timestamp_datetime} and before {end_timestamp_datetime} returns {len(results_list)} results"
     )
@@ -66,16 +68,18 @@ def getStepInfo(start_timestamp, end_timestamp):
 def getWeightInfo(start_timestamp, end_timestamp):
     """Gets new step information after the timestamp"""
     session = DB_SESSION()
-
+    
     start_timestamp_datetime = datetime.datetime.strptime(start_timestamp, "%Y-%m-%d %H:%M:%S.%f")
     end_timestamp_datetime = datetime.datetime.strptime(end_timestamp, "%Y-%m-%d %H:%M:%S.%f")
-
+    
     readings = session.query(Weight).filter(Weight.date_created >= start_timestamp_datetime, Weight.date_created < end_timestamp_datetime)
     results_list = []
+    
     for reading in readings:
         results_list.append(reading.to_dict())
+    
     session.close()
-
+    
     logger.info(
         f"Query for Weight Information after {start_timestamp_datetime} and before {end_timestamp_datetime} returns {len(results_list)} results"
     )
@@ -88,15 +92,16 @@ def process_messages():
     max_retries = app_config['connection']['retries']
     current_tries = 0
     while current_tries < max_retries:
- #       logger.info(f"Trying to connect to Kafka ATTEMPT {current_tries}")
+        logger.info(f"Trying to connect to Kafka ATTEMPT {current_tries}")
         try:
             client = KafkaClient(hosts=f"{app_config['events']['hostname']}:{app_config['events']['port']}")
             topic = client.topics[str.encode(app_config["events"]["topic"])]
+            break
         except:
             current_tries += 1
             logger.error(f"Connection to Kafka failed ATTEMPT {current_tries}")
             time.sleep(app_config['scheduler']['sleep'])
-            continue
+            #continue
     # Create a consume on a consumer group, that only reads new messages
     # (uncommitted messages) when the service re-starts (i.e., it doesn't
     # read all the old messages from the history in the message queue).

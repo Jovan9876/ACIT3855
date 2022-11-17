@@ -120,8 +120,7 @@ components:
         - totalDistance
         - elevation
         - floorsClimbed
-        - start_timestamp
-        - end_timestamp
+        - timestamp
         - traceID
       properties:
         userID:
@@ -141,11 +140,7 @@ components:
         floorsClimbed:
           type: integer
           example: 14
-        start_timestamp:
-          type: string
-          format: date-time
-          example: "2022-09-22 14:31:26.270075"
-        end_timestamp:
+        timestamp:
           type: string
           format: date-time
           example: "2022-09-22 14:31:26.270075"
@@ -160,8 +155,7 @@ components:
         - weightLost
         - newWeight
         - fitnessScore
-        - start_timestamp
-        - end_timestamp
+        - timestamp
         - traceID
       properties:
         userID:
@@ -182,11 +176,7 @@ components:
           type: integer
           example: 1
           # 1 (poor), 2 (okay), 3 (good), 4 (excellent)
-        start_timestamp:
-          type: string
-          format: date-time
-          example: "2022-09-22 14:31:26.270075"
-        end_timestamp:
+        timestamp:
           type: string
           format: date-time
           example: "2022-09-22 14:31:26.270075"

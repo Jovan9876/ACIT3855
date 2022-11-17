@@ -8,6 +8,6 @@ steps:
 weight:
   url: http://localhost:8090/read/weight
 connection:
-  retries: 5
+  retries: 20
 scheduler:
-  sleep: 5
+  sleep: 3

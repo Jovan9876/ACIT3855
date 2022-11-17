@@ -7,3 +7,5 @@ steps:
   url: http://localhost:8090/read/steps
 weight:
   url: http://localhost:8090/read/weight
+scheduler:
+  sleep: 5

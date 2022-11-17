@@ -9,7 +9,7 @@ import requests
 import yaml
 from connexion import NoContent
 from pykafka import KafkaClient
-
+import time
 with open("app_conf.yml", "r") as f:
     app_config = yaml.safe_load(f.read())
 
@@ -18,7 +18,17 @@ with open("log_conf.yml", "r") as f:
     logging.config.dictConfig(log_config)
 
 logger = logging.getLogger("basicLogger")
-
+current_tries = 0
+max_retries = app_config['connection']['retries']
+while current_tries < max_retries:
+    logger.info(f"Trying to connect to Kafka ATTEMPT {current_tries}")
+    try:
+        client = KafkaClient(hosts=f"{app_config['events']['hostname']}:{app_config['events']['port']}")
+        topic = client.topics[str.encode(app_config["events"]["topic"])]
+    except:
+        current_tries += 1
+        logger.error(f"Connection to Kafka failed ATTEMPT {current_tries}")
+        time.sleep(app_config['scheduler']['sleep'])
 
 def addStepInfo(body):
     """Recieves step count information"""
@@ -27,8 +37,7 @@ def addStepInfo(body):
     logger.info(f"Received event addStepInfo request with a trace id of {trace_id}")
 
     body["traceID"] = trace_id
-    client = KafkaClient(hosts=f"{app_config['events']['hostname']}:{app_config['events']['port']}")
-    topic = client.topics[str.encode(app_config["events"]["topic"])]
+
     producer = topic.get_sync_producer()
     msg = { "type": "addStepInfo", "datetime" : datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f"),
     "payload": body }
@@ -49,8 +58,7 @@ def addWeightInfo(body):
     logger.info(f"Received event addWeightInfo request with a trace id of {trace_id}")
 
     body["traceID"] = trace_id
-    client = KafkaClient(hosts=f"{app_config['events']['hostname']}:{app_config['events']['port']}")
-    topic = client.topics[str.encode(app_config["events"]["topic"])]
+
     producer = topic.get_sync_producer()
     msg = { "type": "addWeightInfo", "datetime" : datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f"),
     "payload": body }

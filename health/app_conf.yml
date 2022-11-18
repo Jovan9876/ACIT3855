@@ -6,9 +6,11 @@ scheduler:
 connection:
   retries: 5
 services:
+  processing: http://processing:8100
   reciever: http://reciever:8080
   storage: http://storage:8090
-  processing: http://processing:8100  
+  
+  #processing: http://processing:8100  
   audit: http://audit_log:8110
 eventstore:
   filename: status.json

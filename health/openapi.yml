@@ -1,10 +1,10 @@
 openapi: 3.0.0
 servers:
-  - url: "http://localhost:8100"
+  - url: "http://localhost:8120"
 info:
-  description: This API provides event stats
+  description: This API provides health of all services
   version: "1.0.0"
-  title: Stats API
+  title: Health API
   contact:
     email: jsandhu162@my.bcit.ca
 tags:

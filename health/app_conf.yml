@@ -3,6 +3,8 @@ datastore:
   filename: app.log
 scheduler:
   period_sec: 20
+connection:
+  retries: 5
 services:
   reciever: http://reciever:8080
   storage: http://storage:8090

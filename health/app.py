@@ -39,6 +39,7 @@ def checkHealth():
                     statusObj[service] = "Down"
             except requests.exceptions.ConnectionError:
                 logger.info(f"Timed out connecting to {service}")
+                current_tries += 1
             # if service not in statusObj:
             #     statusObj[service] = "Down"
     # Add the last updated time to the current time

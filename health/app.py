@@ -1,4 +1,5 @@
 import datetime
+import json
 import logging
 import logging.config
 
@@ -6,10 +7,7 @@ import connexion
 import requests
 import yaml
 from apscheduler.schedulers.background import BackgroundScheduler
-
 from flask_cors import CORS, cross_origin
-import json
-
 
 with open("app_conf.yml", "r") as f:
     app_config = yaml.safe_load(f.read())
@@ -25,9 +23,10 @@ logger = logging.getLogger("basicLogger")
 def checkHealth():
     logger.info("Checking health of services")
     statusObj = {}
-    
-    for service in app_config['services']:
+    # Loop over services in config
+    for service in app_config["services"]:
         logger.info(f"Checking health of {service}")
+        # Try to get the health of the service if error its down
         try:
             res = requests.get(f"{app_config['services'][service]}/health", timeout=5)
             if res.status_code == 200:
@@ -37,25 +36,31 @@ def checkHealth():
         except requests.exceptions.ConnectionError:
             if service not in statusObj:
                 statusObj[service] = "Down"
-
+    # Add the last updated time to the current time
     statusObj["lastUpdate"] = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")
+
     logger.info(f"Appending {statusObj} to status.json")
+
+    # Write the status to the status.json file
     with open("status.json", "a") as f:
         json.dump(statusObj, f)
+
     logger.info("Health check complete")
 
-    return statusObj
+    return statusObj, 200
 
 
 def initScheduler():
     sched = BackgroundScheduler(daemon=True)
-    sched.add_job(checkHealth, 'interval', seconds=app_config['scheduler']['period_sec'])
+    sched.add_job(
+        checkHealth, "interval", seconds=app_config["scheduler"]["period_sec"]
+    )
     sched.start()
 
 
-app = connexion.FlaskApp(__name__, specification_dir='')
+app = connexion.FlaskApp(__name__, specification_dir="")
 CORS(app.app)
-app.app.config['CORS_HEADERS'] = 'Content-Type'
+app.app.config["CORS_HEADERS"] = "Content-Type"
 app.add_api("openapi.yml", strict_validation=True, validate_responses=True)
 
 if __name__ == "__main__":

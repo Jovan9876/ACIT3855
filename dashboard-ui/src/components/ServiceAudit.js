@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import '../App.css';
 
-export default function EndpointAudit(props) {
+export default function ServiceAudit(props) {
     const [isLoaded, setIsLoaded] = useState(false);
     const [log, setLog] = useState(null);
     const [error, setError] = useState(null)
@@ -34,7 +34,7 @@ export default function EndpointAudit(props) {
         
         return (
             <div>
-                <h3>{props.service}-{index}</h3>
+                <h3>{props.service}</h3>
                 {JSON.stringify(log)}
             </div>
         )

@@ -8,15 +8,12 @@ import AppStats from './components/AppStats'
 function App() {
 
     const endpoints = ["weight", "step"]
-    const services = ["reciever", "storage", "processing", "audit"]
 
     const rendered_endpoints = endpoints.map((endpoint) => {
         return <EndpointAudit key={endpoint} endpoint={endpoint}/>
     })
 
-    const running_services = services.map((service) => {
-        return <ServiceAudit key={service} service={service}/>
-    })
+    const running_services = <ServiceAudit />
 
     return (
         <div className="App">

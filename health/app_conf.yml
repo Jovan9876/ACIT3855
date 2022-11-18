@@ -10,8 +10,3 @@ services:
   audit: http://audit_log:8110
 eventstore:
   filename: status.json
-# ips:
-#   - 8080
-#   - 8090
-#   - 8100
-#   - 8110

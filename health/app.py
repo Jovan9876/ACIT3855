@@ -25,6 +25,7 @@ logger = logging.getLogger("basicLogger")
 def checkHealth():
     logger.info("Checking health of services")
     statusObj = {}
+    
     for service in app_config['services']:
         logger.info(f"Checking health of {service}")
         try:
@@ -37,7 +38,6 @@ def checkHealth():
             if service not in statusObj:
                 statusObj[service] = "Down"
 
-
     statusObj["lastUpdate"] = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")
     logger.info(f"Appending {statusObj} to status.json")
     with open("status.json", "a") as f:
@@ -47,16 +47,13 @@ def checkHealth():
     return statusObj
 
 
-
-
 def initScheduler():
     sched = BackgroundScheduler(daemon=True)
     sched.add_job(checkHealth, 'interval', seconds=app_config['scheduler']['period_sec'])
     sched.start()
-app = connexion.FlaskApp(__name__, specification_dir='')
-# CORS(app.app)
-# app.app.config['CORS_HEADERS'] = 'Content-Type'
 
+
+app = connexion.FlaskApp(__name__, specification_dir='')
 app.add_api("openapi.yml", strict_validation=True, validate_responses=True)
 
 if __name__ == "__main__":

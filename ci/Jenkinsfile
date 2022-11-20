@@ -1,27 +1,20 @@
 pipeline {
     agent any
+
     stages {
         stage('Build') {
             steps {
-
-                }
+                echo 'Building..'
             }
         }
         stage('Test') {
             steps {
-
+                echo 'Testing..'
             }
         }
-        stage('Deliver') {
+        stage('Deploy') {
             steps {
-                sh "chmod +x -R ${env.WORKSPACE}"
-                sh './ci/scripts/deliver.sh'
-            }
-        }
-        stage("Quality Gate") {
-            steps {
-
-                }
+                echo 'Deploying....'
             }
         }
     }

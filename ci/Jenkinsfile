@@ -1,2 +1,2 @@
-@Library('@main') _
+@Library('main') _
 python_build()

@@ -1,2 +1,2 @@
-@Library('main') _
+library 'ACIT3855@main'
 python_build()

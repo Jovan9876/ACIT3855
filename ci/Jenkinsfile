@@ -1,0 +1,28 @@
+pipeline {
+    agent any
+    stages {
+        stage('Build') {
+            steps {
+
+                }
+            }
+        }
+        stage('Test') {
+            steps {
+
+            }
+        }
+        stage('Deliver') {
+            steps {
+                sh "chmod +x -R ${env.WORKSPACE}"
+                sh './ci/scripts/deliver.sh'
+            }
+        }
+        stage("Quality Gate") {
+            steps {
+
+                }
+            }
+        }
+    }
+}

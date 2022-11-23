@@ -2,6 +2,7 @@ import datetime
 import logging
 import logging.config
 import os
+import os.path
 from statistics import mean
 
 import connexion
@@ -15,6 +16,12 @@ from flask_cors import CORS, cross_origin
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from stats import Stats
+
+if os.path.isfile('/data/data.sqlite'):
+    print("Stats sqllite exists")
+else:
+    create_tables()
+    print("Created stats sql lite file")
 
 if "TARGET_ENV" in os.environ and os.environ["TARGET_ENV"] == "test":
     print("In Test Environment")
@@ -43,12 +50,11 @@ DB_SESSION = sessionmaker(bind=DB_ENGINE)
 
 
 
-session = DB_SESSION()
-try:
-    exists = session.query(Stats).first()
-except:
-    create_tables()
-    session.close()
+# session = DB_SESSION()
+# try:
+#     exists = session.query(Stats).first()
+# except:
+#     session.close()
 
 def getStats():
     """ Get latest statistics from database """

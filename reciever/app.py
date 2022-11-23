@@ -32,6 +32,7 @@ with open(log_conf_file, 'r') as f:
 logger = logging.getLogger("basicLogger")
 logger.info("App Conf File: %s" % app_conf_file)
 logger.info("Log Conf File: %s" % log_conf_file)
+logger.info(f"The time is {datetime.datetime.now()}")
 
 current_tries = 0
 max_retries = app_config["connection"]["retries"]

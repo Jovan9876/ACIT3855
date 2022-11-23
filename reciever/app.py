@@ -2,6 +2,7 @@ import datetime
 import json
 import logging
 import logging.config
+import os
 import time
 import uuid
 
@@ -11,14 +12,26 @@ import yaml
 from connexion import NoContent
 from pykafka import KafkaClient
 
-with open("app_conf.yml", "r") as f:
+if "TARGET_ENV" in os.environ and os.environ["TARGET_ENV"] == "test":
+    print("In Test Environment")
+    app_conf_file = "/config/app_conf.yml"
+    log_conf_file = "/config/log_conf.yml"
+else:
+    print("In Dev Environment")
+    app_conf_file = "app_conf.yml"
+    log_conf_file = "log_conf.yml"
+
+with open(app_conf_file, 'r') as f:
     app_config = yaml.safe_load(f.read())
 
-with open("log_conf.yml", "r") as f:
+# External Logging Configuration
+with open(log_conf_file, 'r') as f:
     log_config = yaml.safe_load(f.read())
     logging.config.dictConfig(log_config)
 
 logger = logging.getLogger("basicLogger")
+logger.info("App Conf File: %s" % app_conf_file)
+logger.info("Log Conf File: %s" % log_conf_file)
 
 current_tries = 0
 max_retries = app_config["connection"]["retries"]

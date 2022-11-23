@@ -12,7 +12,7 @@ handlers:
     class: logging.FileHandler
     level: DEBUG
     formatter: simple
-    filename: app.log
+    filename: /logs/audit_log.log
 loggers:
   basicLogger:
     level: DEBUG

@@ -60,6 +60,11 @@ services:
       - 8080:8080
     depends_on:
       - kafka
+    environment:
+      - TARGET_ENV=test
+    volumes:
+      - /home/azureuser/config/reciever:/config
+      - /home/azureuser/logs:/logs
   storage:
     build:
       context: ../storage/
@@ -69,6 +74,11 @@ services:
       - 8090:8090
     depends_on:
       - "kafka"
+    environment:
+      - TARGET_ENV=test
+    volumes:
+      - /home/azureuser/config/storage:/config
+      - /home/azureuser/logs:/logs
   processing:
     build:
       context: ../processing/
@@ -79,6 +89,11 @@ services:
     restart: always
     depends_on:
       - "storage"
+    environment:
+      - TARGET_ENV=test
+    volumes:
+      - /home/azureuser/config/processing:/config
+      - /home/azureuser/logs:/logs
   audit_log:
     build:
       context: ../audit_log/
@@ -88,6 +103,11 @@ services:
       - 8110:8110
     depends_on:
       - "kafka"
+    environment:
+      - TARGET_ENV=test
+    volumes:
+      - /home/azureuser/config/audit_log:/config
+      - /home/azureuser/logs:/logs
   dashboard:
     build:
       context: ../dashboard-ui/
@@ -105,7 +125,11 @@ services:
     restart: always
     ports:
       - 8120:8120
-
+    environment:
+      - TARGET_ENV=test
+    volumes:
+      - /home/azureuser/config/health:/config
+      - /home/azureuser/logs:/logs
 volumes: 
   my-db:
 

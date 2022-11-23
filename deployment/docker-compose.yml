@@ -146,6 +146,8 @@ services:
     volumes:
       - /home/azureuser/config/health:/config
       - /home/azureuser/logs:/logs
+    networks:
+      - "api.network"
   nginx:
     image: nginx:latest
     restart: always

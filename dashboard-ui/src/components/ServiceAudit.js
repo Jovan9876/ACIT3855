@@ -9,7 +9,7 @@ export default function ServiceAudit(props) {
     const [index, setIndex] = useState(null)
 
     const getAudit = () => {
-        fetch(`http://acit-3855.eastus.cloudapp.azure.com:8120/health`)
+        fetch(`http://acit-3855.eastus.cloudapp.azure.com/health/health`)
             .then(res => res.json())
             .then((result)=>{
                 console.log(result)

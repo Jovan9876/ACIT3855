@@ -4,4 +4,4 @@ datastore:
 scheduler:
   period_sec: 5
 eventstore:
-  url: http://storage:8090
+  url: http://acit-3855.eastus.cloudapp.azure.com/storage

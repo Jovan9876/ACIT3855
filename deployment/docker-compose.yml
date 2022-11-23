@@ -57,7 +57,7 @@ services:
       dockerfile: Dockerfile
     restart: always
     ports:
-      - 8080:8080
+      - "8080"
     depends_on:
       - kafka
     environment:
@@ -65,13 +65,15 @@ services:
     volumes:
       - /home/azureuser/config/reciever:/config
       - /home/azureuser/logs:/logs
+    networks:
+      - "api.network"
   storage:
     build:
       context: ../storage/
       dockerfile: Dockerfile
     restart: always
     ports:
-      - 8090:8090
+      - "8090"
     depends_on:
       - "kafka"
     environment:
@@ -79,13 +81,14 @@ services:
     volumes:
       - /home/azureuser/config/storage:/config
       - /home/azureuser/logs:/logs
+    networks:
+      - "api.network"
   processing:
     build:
       context: ../processing/
       dockerfile: Dockerfile
     ports:
-      - 8100:8100
-        #network_mode: "host"
+      - "8100"
     restart: always
     depends_on:
       - "storage"
@@ -95,13 +98,15 @@ services:
       - /home/azureuser/config/processing:/config
       - /home/azureuser/logs:/logs
       - processing-db:/data
+    networks:
+      - "api.network"
   audit_log:
     build:
       context: ../audit_log/
       dockerfile: Dockerfile
     restart: always
     ports:
-      - 8110:8110
+      - "8110"
     depends_on:
       - "kafka"
     environment:
@@ -109,16 +114,20 @@ services:
     volumes:
       - /home/azureuser/config/audit_log:/config
       - /home/azureuser/logs:/logs
+    networks:
+      - "api.network"
   dashboard:
     build:
       context: ../dashboard-ui/
       dockerfile: Dockerfile
     restart: always
     ports:
-      - 3000:3000
+      - "3000"
     depends_on:
       - "processing"
       - "audit_log"
+    networks:
+      - "api.network"
   health:
     build:
       context: ../health/
@@ -131,7 +140,26 @@ services:
     volumes:
       - /home/azureuser/config/health:/config
       - /home/azureuser/logs:/logs
+  nginx:
+    image: nginx:latest
+    restart: always
+    # Connects the conf file of the container to the conf file in our folder
+    volumes:
+    - /home/azureuser/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    # It will start up the nginx only when all api containers have started
+    depends_on:
+    - "receiver"
+    - "storage"
+    - "processing"
+    - "audit_log"
+    - "dashboard"
+    # Connects the port 80 of the nginx container to localhost:80 or localhost
+    ports:
+    - "80:80"
+    networks:
+    - "api.network"
 volumes: 
   my-db:
   processing-db:
-
+networks:
+  api.network:

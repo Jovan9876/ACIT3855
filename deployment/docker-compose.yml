@@ -50,6 +50,8 @@ services:
     # Where our data will be persisted
     volumes:
       - my-db:/var/lib/mysql
+    networks:
+      - "api.network"
 # Names our volume
   reciever:
     build:

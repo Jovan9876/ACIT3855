@@ -42,13 +42,13 @@ Base.metadata.bind = DB_ENGINE
 DB_SESSION = sessionmaker(bind=DB_ENGINE)
 
 
+
 session = DB_SESSION()
 try:
     exists = session.query(Stats).first()
 except:
     create_tables()
     session.close()
-
 
 def getStats():
     """ Get latest statistics from database """

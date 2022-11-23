@@ -151,7 +151,7 @@ services:
     restart: always
     # Connects the conf file of the container to the conf file in our folder
     volumes:
-    - /home/azureuser/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    - /home/azureuser/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
     # It will start up the nginx only when all api containers have started
     depends_on:
     - "reciever"

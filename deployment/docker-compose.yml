@@ -8,6 +8,8 @@ services:
     hostname: zookeeper
     volumes:
       - /home/azureuser/zookeeper/data:/opt/zookeeper-3.4.13/data
+    networks:
+      - "api.network"
   kafka:
     image: wurstmeister/kafka
     restart: always
@@ -30,6 +32,8 @@ services:
       - /home/azureuser/kafka:/kafka/kafka-logs
     depends_on:
       - "zookeeper"
+    networks:
+      - "api.network"
   db:
     image: mysql:5.7
     restart: always

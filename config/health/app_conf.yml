@@ -6,11 +6,9 @@ scheduler:
 connection:
   retries: 5
 services:
-  processing: http://processing:8100
-  reciever: http://reciever:8080
-  storage: http://storage:8090
-  
-  #processing: http://processing:8100  
-  audit: http://audit_log:8110
+  processing: http://acit-3855.eastus.cloudapp.azure.com/processing
+  reciever: http://acit-3855.eastus.cloudapp.azure.com/reciever
+  storage: http://acit-3855.eastus.cloudapp.azure.com/storage
+  audit: http://http://acit-3855.eastus.cloudapp.azure.com/audit_log
 eventstore:
   filename: status.json

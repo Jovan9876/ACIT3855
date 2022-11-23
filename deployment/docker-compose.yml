@@ -58,9 +58,10 @@ services:
       - "api.network"
 # Names our volume
   reciever:
-    build:
-      context: ../reciever/
-      dockerfile: Dockerfile
+    image: jovan9876/reciever
+    # build:
+    #   context: ../reciever/
+    #   dockerfile: Dockerfile
     restart: always
     ports:
       - "8080"
@@ -74,9 +75,10 @@ services:
     networks:
       - "api.network"
   storage:
-    build:
-      context: ../storage/
-      dockerfile: Dockerfile
+    image: jovan9876/storage
+    # build:
+    #   context: ../storage/
+    #   dockerfile: Dockerfile
     restart: always
     ports:
       - "8090"
@@ -90,9 +92,10 @@ services:
     networks:
       - "api.network"
   processing:
-    build:
-      context: ../processing/
-      dockerfile: Dockerfile
+    image: jovan9876/processing
+    # build:
+    #   context: ../processing/
+    #   dockerfile: Dockerfile
     ports:
       - "8100"
     restart: always
@@ -107,9 +110,10 @@ services:
     networks:
       - "api.network"
   audit_log:
-    build:
-      context: ../audit_log/
-      dockerfile: Dockerfile
+    image: jovan9876/audit_log
+    # build:
+    #   context: ../audit_log/
+    #   dockerfile: Dockerfile
     restart: always
     ports:
       - "8110"

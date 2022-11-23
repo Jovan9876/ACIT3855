@@ -114,7 +114,7 @@ def populateStats():
         if (len(steps.json()) == 0) or (len(weight.json()) == 0):
             # If the steps or weight request doesnt return 200 log an error and end processing
             logger.error(
-                f"Steps request returned {steps.status_code} Weight request returned {weight.status_code}"
+                f"Steps request returned {steps.json()} Weight request returned {weight.json()}"
             )
         else:
             # Assign lists to perform calculations later

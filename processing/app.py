@@ -17,7 +17,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from stats import Stats
 
-if os.path.isfile('/data/stats.sqlite'):
+if os.path.isfile('/data/stats.sqlite') == True:
     print("Stats sqllite exists")
 else:
     create_tables()

@@ -1,2 +1,0 @@
-@Library('git_functions@main') _
-python_build()

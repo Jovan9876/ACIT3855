@@ -1,2 +1,2 @@
 @Library('git_functions@main') _
-python_build('storage', 'storageApp')
+python_build('storage', 'latest')

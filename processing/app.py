@@ -78,7 +78,7 @@ def populateStats():
     """ Periodically update stats """
     
     session = DB_SESSION()
-    logger.info("TESTING!TESTING!TESTING!TESTING!TESTING!TESTING!TESTING!")
+#     logger.info("TESTING!TESTING!TESTING!TESTING!TESTING!TESTING!TESTING!")
     logger.info("Periodic processing has started")
     last_datetime = session.query(Stats).order_by(Stats.last_updated.desc()).first()
     if last_datetime is None:

@@ -1,2 +1,2 @@
 @Library('git_functions@main') _
-python_build('audit_log', 'auditApp')
+python_build('audit_log', 'latest')

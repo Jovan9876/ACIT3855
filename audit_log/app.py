@@ -65,6 +65,7 @@ def getStepReading(index):
         reset_offset_on_start=True, consumer_timeout_ms=1000
     )
     logger.info(f"Retrieving Step at index {index}")
+    logger.info("WORKEDWORKEDWORKEDWORKEDWORKEDWORKEDWORKEDWORKEDWORKEDWORKEDWORKED")
     try:
         count = 0
         for msg in consumer:

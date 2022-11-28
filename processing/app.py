@@ -76,7 +76,8 @@ def getStats():
 
 def populateStats():
     """ Periodically update stats """
-    
+    logger.info("WORKEDWORKEDWORKEDWORKEDWORKEDWORKEDWORKEDWORKEDWORKED")
+
     session = DB_SESSION()
 #     logger.info("TESTING!TESTING!TESTING!TESTING!TESTING!TESTING!TESTING!")
     logger.info("Periodic processing has started")

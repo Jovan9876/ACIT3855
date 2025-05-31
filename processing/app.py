@@ -49,13 +49,6 @@ Base.metadata.bind = DB_ENGINE
 DB_SESSION = sessionmaker(bind=DB_ENGINE)
 
 
-
-# session = DB_SESSION()
-# try:
-#     exists = session.query(Stats).first()
-# except:
-#     session.close()
-
 def getStats():
     """ Get latest statistics from database """
     session = DB_SESSION()
@@ -76,10 +69,8 @@ def getStats():
 
 def populateStats():
     """ Periodically update stats """
-    logger.info("WORKEDWORKEDWORKEDWORKEDWORKEDWORKEDWORKEDWORKEDWORKEDWORKEDWORKEDWORKEDWORKEDWORKEDWORKEDWORKEDWORKEDWORKED")
-
+    
     session = DB_SESSION()
-#     logger.info("TESTING!TESTING!TESTING!TESTING!TESTING!TESTING!TESTING!")
     logger.info("Periodic processing has started")
     last_datetime = session.query(Stats).order_by(Stats.last_updated.desc()).first()
     if last_datetime is None:
